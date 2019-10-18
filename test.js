@@ -13,13 +13,25 @@ var questions = [
         title: "DOM stands for _____.",
         choices: ["Domain", "Document object model", "Domain operation method", "Document operation method"],
         answer: "Document object model"
-    }
+    },
+    {
+        title: "CSS stands for _____.",
+        choices: ["Cascading style sheets", "Current style set", "Copy set style", "Character subject style"],
+        answer: "Cascading style sheets"
+    },
+    {
+        title: "What does the parseInt() function do?",
+        choices: ["It breaks up a multi digit number into an array of the number", "It's a debug function that checks if a variable is a number", "It changes an integer into a string", "It changes a string into an integer"],
+        answer: "It changes a string into an integer"
+    },
 ];
 
 var choicesDiv = $("#choicesDiv");
 var timerElement = $("#timer");
-var timeLeft = questions.length * 15;
-var i = 0
+var timeLeft = questions.length * 1;
+var i = 0;
+var userInitials = "";
+var score = "";
 
 $("#question-area").text("Welcome! If you want to play the test just click the button below to get started!")
 $("#choices-area").html("<button type='button' class='btn btn-primary' id='start-button'>Start Quiz</button>")
@@ -35,6 +47,7 @@ function startTimer() {
         $("#timer").text("Time left: " + timeLeft);
         if (timeLeft == 0) {
             clearInterval(interval);
+            gameOver();
         }
     }, 1000);
 }
@@ -46,6 +59,9 @@ function generateQuesion() {
     $("#choices-second").text(questions[i].choices[1]);
     $("#choices-third").text(questions[i].choices[2]);
     $("#choices-fourth").text(questions[i].choices[3]);
+    if (i == 5){
+        gameOver()
+    }
 }
 
 $("#choices-first").click(function (event) {
@@ -91,15 +107,34 @@ function questionCorrect() {
         if (i < questions.length) {
             generateQuesion();
         }
-    }, 1500);
+    }, 1000);
 };
 
 function questionWrong() {
     $("#choices-area").html('<p class="lead" id="choices-area">Thats Incorrect!</p>');
     i++;
+    if (timeLeft < 15){
+        timeLeft = 1;
+    } else {
+        timeLeft = timeLeft - 15;
+    };
     setTimeout(function () {
         if (i < questions.length) {
             generateQuesion();
         }
-    }, 1500);
+    }, 1000);
 };
+
+function gameOver() {
+    score = timeLeft;
+    $("#question-area").text("Good job!");
+    $("#choices-area").html('<p class="lead" id="choices-area">Head on over to the highscores to see how you did versus your prior tries.</p>');
+    $("#choices-first").text("");
+    $("#choices-second").text("");
+    $("#choices-third").text("");
+    $("#choices-fourth").text("");
+    userInitials = prompt("Please enter your initials so I can record your highscore.")
+    localStorage.setItem("userInitials", (userInitials));
+}
+
+localStorage.setItem("userInitials", (userInitials));

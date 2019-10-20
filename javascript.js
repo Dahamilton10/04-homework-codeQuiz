@@ -28,7 +28,7 @@ var questions = [
 
 var choicesDiv = $("#choicesDiv");
 var timerElement = $("#timer");
-var timeLeft = questions.length * 1;
+var timeLeft = questions.length * 15;
 var i = 0;
 var userInitials = "";
 var score = "";
@@ -65,15 +65,17 @@ function startTimer() {
 }
 
 function generateQuesion() {
+    console.log(i);
+    if (i == 5){
+        console.log("inside if of gameover function call");
+        gameOver();
+    };
     $("#question-area").text(questions[i].title);
     $("#choices-area").html('<p class="lead" id="choices-area"></p>');
     $("#choices-first").text(questions[i].choices[0]);
     $("#choices-second").text(questions[i].choices[1]);
     $("#choices-third").text(questions[i].choices[2]);
     $("#choices-fourth").text(questions[i].choices[3]);
-    if (i == 5){
-        gameOver()
-    }
 }
 
 $("#choices-first").click(function (event) {
@@ -116,7 +118,7 @@ function questionCorrect() {
     $("#choices-area").html('<p class="lead" id="choices-area">Thats Correct!</p>');
     i++;
     setTimeout(function () {
-        if (i < questions.length) {
+        if (i < questions.length + 1) {
             generateQuesion();
         }
     }, 1000);
@@ -131,7 +133,7 @@ function questionWrong() {
         timeLeft = timeLeft - 15;
     };
     setTimeout(function () {
-        if (i < questions.length) {
+        if (i < questions.length + 1) {
             generateQuesion();
         }
     }, 1000);

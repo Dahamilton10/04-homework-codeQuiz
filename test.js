@@ -32,6 +32,7 @@ var timeLeft = questions.length * 1;
 var i = 0;
 var userInitials = "";
 var score = "";
+var scoreboard = {}
 
 $("#question-area").text("Welcome! If you want to play the test just click the button below to get started!")
 $("#choices-area").html("<button type='button' class='btn btn-primary' id='start-button'>Start Quiz</button>")
@@ -65,7 +66,7 @@ function generateQuesion() {
 }
 
 $("#choices-first").click(function (event) {
-    event.prevetDefault
+    event.preventDefault()
     if (questions[i].answer == questions[i].choices[0]) {
         questionCorrect()
     } else {
@@ -74,7 +75,7 @@ $("#choices-first").click(function (event) {
 });
 
 $("#choices-second").click(function (event) {
-    event.prevetDefault
+    event.preventDefault()
     if (questions[i].answer == questions[i].choices[1]) {
         questionCorrect()
     } else {
@@ -134,7 +135,6 @@ function gameOver() {
     $("#choices-third").text("");
     $("#choices-fourth").text("");
     userInitials = prompt("Please enter your initials so I can record your highscore.")
-    localStorage.setItem("userInitials", (userInitials));
+    scoreboard[userInitials] = timeLeft;
+    console.log(scoreboard);
 }
-
-localStorage.setItem("userInitials", (userInitials));

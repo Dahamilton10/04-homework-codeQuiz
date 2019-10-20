@@ -32,7 +32,18 @@ var timeLeft = questions.length * 1;
 var i = 0;
 var userInitials = "";
 var score = "";
-var scoreboard = {}
+var scoreboard = [];
+var userScore = "";
+
+
+
+// I got this from https://stackoverflow.com/questions/3262605/how-to-check-whether-a-storage-item-is-set
+//I wasn't sure how to only get an item if it's not currently set. I know if you try to getItem and it doesn't exist than it comes as null
+//so I just had an if statment that only runs if when I pull scoreboard it comes back not null
+if (localStorage.getItem("scoreboard") !== null){
+    scoreboard = JSON.parse(localStorage.getItem("scoreboard"));
+};
+
 
 $("#question-area").text("Welcome! If you want to play the test just click the button below to get started!")
 $("#choices-area").html("<button type='button' class='btn btn-primary' id='start-button'>Start Quiz</button>")
@@ -135,6 +146,11 @@ function gameOver() {
     $("#choices-third").text("");
     $("#choices-fourth").text("");
     userInitials = prompt("Please enter your initials so I can record your highscore.")
-    scoreboard[userInitials] = timeLeft;
-    console.log(scoreboard);
+    userScore = userInitials + " score: " + score;
+    console.log(userScore);
+    scoreboard.push(userScore);
+    localStorage.setItem("scoreboard", JSON.stringify(scoreboard));
 }
+for (var i = 0; i < scoreboard.length; i++) {
+    $("#highscoresArea").text(scoreboard[i]);
+};

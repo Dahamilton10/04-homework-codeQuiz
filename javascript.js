@@ -148,8 +148,10 @@ function gameOver() {
     $("#choices-third").text("");
     $("#choices-fourth").text("");
     userInitials = prompt("Please enter your initials so I can record your highscore.")
+    if (userInitials !== null){
     userScore = userInitials + " score: " + score;
     console.log(userScore);
     scoreboard.push(userScore);
     localStorage.setItem("scoreboard", JSON.stringify(scoreboard));
+    };
 }
